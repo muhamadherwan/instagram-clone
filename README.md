@@ -15,3 +15,6 @@
 * [x] Cleanup.
 * [x] Posts component.
 * [x] Header component.
+* [x] Setup firabase database and posts collection.
+* [x] Setup firebase email auth.
+* [x] Sign in modal box.

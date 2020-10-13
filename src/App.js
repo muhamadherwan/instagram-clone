@@ -2,46 +2,84 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Posts from './Posts'; 
 import { db } from './firebase';
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import { Button } from '@material-ui/core';
 
+
+// modal style
+function getModalStyle(){
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const usesStyles = makeStyles((theme) => ({
+  paper:{
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border:'2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2,4,3),
+  },
+}));
 
 function App() {
 
+  // modal style
+  const classes = usesStyles(); 
+  const [modalStyle] = useState(getModalStyle);
+
   // use hook to set state values
   const [posts, setPosts] = useState([]);
-  //   {
-  //     username:'Muhamad Herwan',
-  //     caption:'Focus on impact! ',
-  //     imageUrl:'https://media1.tenor.com/images/c581b5c680dfa66b6e419bdf2182a6e0/tenor.gif?itemid=14169217'
-  //   },
-  //   {
-  //     username:'Zaidi Ibrahim',
-  //     caption:'Be bold.',
-  //     imageUrl:'https://1.bp.blogspot.com/-HiwbcC7eOl4/W03MJvkMC-I/AAAAAAAAFcU/l3Bmyc9KE2IOoZqCKB8dh29ug5iXBrUugCLcBGAs/s1600/tenor.gif',
-  //   }    
-  // ]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     // fetch posts from database
     db.collection('posts').onSnapshot(snapshot => {
       // every time new post is added, this code fires..
-      setPosts(snapshot.docs.map(doc=>doc.data()))
+      setPosts(snapshot.docs.map(doc=>
+        ({
+          id: doc.id,
+          post: doc.data()
+        })));
     }) 
   }, []);
 
+
   return (
     <div className="App">
-      
+     
+     <Modal
+      open={open}
+      onClose={() => setOpen(false)}
+     >
+      <div style={modalStyle} className={classes.paper}>
+        <h2>Text in a modal</h2>
+      </div>
+
+     </Modal>
+     
+     
       <div className='app__header'>
         <img 
         className='app__headerImage'
         src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         alt="ig"
-        />
+        /> <h4>from HERWAN</h4>
       </div>
       
+      <Button onClick={() => setOpen(true)}>Sign Up</Button>
+
       {
-        posts.map(post => (
-          <Posts username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+        posts.map(( {id, post} ) => (
+          <Posts key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
         ))
       }
 

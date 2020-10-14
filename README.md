@@ -22,5 +22,11 @@
 * [x] Storing posts in firebase.
     * [x] Image upload component.
         * [x] Choose image for upload.
-        * [x] Upload image to firebase db.
+        * [x] Upload image and caption to firebase db.
+* [x] Apps styling.
+* [x] setup react instagram embed.
+* [x] Responsive styling.
+* [x] Post Comment.
+* [x] Deploy to firebase server.
+* [x] On9 live testing!
 

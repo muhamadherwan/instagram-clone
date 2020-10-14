@@ -6,6 +6,7 @@ import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
+import InstagramEmbed from 'react-instagram-embed';
 
 
 // modal style
@@ -105,13 +106,6 @@ function App() {
   return (
     <div className="App">
 
-      {user?.displayName ? (
-        <ImageUpload username={user.displayName} />
-      ): (
-        <h3>Sorry please login to upload</h3>  
-      )}
-      
-     
      <Modal
       open={open}
       onClose={() => setOpen(false)}
@@ -188,30 +182,59 @@ function App() {
         </form>
       </div>
      </Modal>
-     
+
+
       <div className='app__header'>
         <img 
         className='app__headerImage'
         src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         alt="ig"
-        /> <h4>from HERWAN</h4>
+        />
+
+        {/* auth button part */}
+        {user ? (
+          <Button onClick={() => auth.signOut()}>Log out</Button>
+        ) : (
+          <div>
+            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+          </div>
+        )}
+
       </div>
-      
-      {/* auth button part */}
-      {user ? (
-        <Button onClick={() => auth.signOut()}>Log out</Button>
-      ) : (
-        <div>
-          <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
-          <Button onClick={() => setOpen(true)}>Sign Up</Button>
+
+      <div className='app__posts'>
+        <div className='app__postsLeft'>
+          {
+            posts.map(( {id, post} ) => (
+              <Posts key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+            ))
+          }
         </div>
-      )}
         
-      {
-        posts.map(( {id, post} ) => (
-          <Posts key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
-        ))
-      }
+        <div className='app__postsRight'>
+          <InstagramEmbed
+            url='https://instagr.am/p/Zw9o4/'
+            maxWidth={320}
+            hideCaption={false}
+            containerTagName='div'
+            protocol=''
+            injectScript
+            onLoading={() => {}}
+            onSuccess={() => {}}
+            onAfterRender={() => {}}
+            onFailure={() => {}}
+          />
+        </div>
+      </div>
+
+      
+      {/* upload post */}
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+      ): (
+        <h3>Sorry please login to upload</h3>  
+      )}
 
     </div>
   );

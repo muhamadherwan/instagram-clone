@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Posts from './Posts'; 
+import ImageUpload from './ImageUpload';
 import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -103,6 +104,8 @@ function App() {
 
   return (
     <div className="App">
+
+      <ImageUpload />
      
      <Modal
       open={open}

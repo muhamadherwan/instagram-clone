@@ -6,8 +6,8 @@ import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
-import InstagramEmbed from 'react-instagram-embed';
-
+import InstagramEmbed from 'react-instagram-embed'; 
+//import logo from './igherwan.png';
 
 // modal style
 function getModalStyle(){
@@ -188,6 +188,7 @@ function App() {
         <img 
         className='app__headerImage'
         src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+        //src={logo}
         alt="ig"
         />
 

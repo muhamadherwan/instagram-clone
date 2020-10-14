@@ -21,4 +21,6 @@
 * [x] Firebase Email Auth.
 * [x] Storing posts in firebase.
     * [x] Image upload component.
+        * [x] Choose image for upload.
+        * [x] Upload image to firebase db.
 
